@@ -21,7 +21,7 @@ except ImportError:
     pass
 
 __version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
+__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PI4IOE5V9xxx.git"
 
 
 # pylint: disable=too-few-public-methods

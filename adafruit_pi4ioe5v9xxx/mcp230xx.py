@@ -16,7 +16,7 @@ CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
 from .mcp23xxx import MCP23XXX
 
 __version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
+__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PI4IOE5V9xxx.git"
 
 # Global buffer for reading and writing registers with the devices.  This is
 # shared between both the MCP23008 and MCP23017 class to reduce memory allocations.
@@ -26,7 +26,7 @@ _BUFFER = bytearray(3)
 
 # pylint: disable=too-few-public-methods
 class MCP230XX(MCP23XXX):
-    """Base class for MCP230xx devices."""
+    """Base class for PI4IOE5V9xxx devices."""
 
     def _read_u16le(self, register: int) -> int:
         # Read an unsigned 16 bit little endian value from the specified 8-bit

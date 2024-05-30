@@ -17,7 +17,7 @@ they were native CircuitPython digital inputs/outputs.
     :caption: examples/mcp23Sxx_simpletest.py
     :linenos:
 
-MCP230xx Event detect interrupt
+PI4IOE5V9xxx Event detect interrupt
 -------------------------------
 
 Example showing the event detect interrupt feature
@@ -37,10 +37,10 @@ Example showing the event detect interrupt feature
     :caption: examples/mcp23Sxx_event_detect_interrupt.py
     :linenos:
 
-MCP230xx LEDs and Buttons
+PI4IOE5V9xxx LEDs and Buttons
 -------------------------------
 
-LEDs and buttons example for the MCP230xx
+LEDs and buttons example for the PI4IOE5V9xxx
 
 .. literalinclude:: ../examples/mcp230xx_leds_and_buttons.py
     :caption: examples/mcp230xx_leds_and_buttons.py

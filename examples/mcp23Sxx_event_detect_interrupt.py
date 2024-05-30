@@ -9,7 +9,7 @@ import board
 import busio
 from digitalio import DigitalInOut, Direction, Pull
 from RPi import GPIO
-from adafruit_mcp230xx.mcp23s17 import MCP23S17
+from adafruit_pi4ioe5v9xxx.mcp23s17 import MCP23S17
 
 # Initialize the SPI bus:
 spi = busio.SPI(board.SCK_1, MOSI=board.MOSI_1, MISO=board.MISO_1)

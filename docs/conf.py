@@ -48,7 +48,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "Adafruit MCP230xx Library"
+project = "Adafruit PI4IOE5V9xxx Library"
 creation_year = "2017"
 current_year = str(datetime.datetime.now().year)
 year_duration = (
@@ -147,8 +147,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "AdafruitMCP230xxLibrary.tex",
-        "AdafruitMCP230xx Library Documentation",
+        "AdafruitPI4IOE5V9xxxLibrary.tex",
+        "AdafruitPI4IOE5V9xxx Library Documentation",
         author,
         "manual",
     ),
@@ -161,8 +161,8 @@ latex_documents = [
 man_pages = [
     (
         master_doc,
-        "AdafruitMCP230xxlibrary",
-        "Adafruit MCP230xx Library Documentation",
+        "AdafruitPI4IOE5V9xxxlibrary",
+        "Adafruit PI4IOE5V9xxx Library Documentation",
         [author],
         1,
     )
@@ -176,10 +176,10 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "AdafruitMCP230xxLibrary",
-        "Adafruit MCP230xx Library Documentation",
+        "AdafruitPI4IOE5V9xxxLibrary",
+        "Adafruit PI4IOE5V9xxx Library Documentation",
         author,
-        "AdafruitMCP230xxLibrary",
+        "AdafruitPI4IOE5V9xxxLibrary",
         "One line description of project.",
         "Miscellaneous",
     ),

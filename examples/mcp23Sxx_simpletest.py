@@ -12,7 +12,7 @@ import board
 import busio
 import digitalio
 
-from adafruit_mcp230xx.mcp23s08 import MCP23S08
+from adafruit_pi4ioe5v9xxx.mcp23s08 import MCP23S08
 
 # from adafruit_mcp230xx.mcp23s17 import MCP23S17
 

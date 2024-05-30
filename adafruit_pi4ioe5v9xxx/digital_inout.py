@@ -7,7 +7,7 @@
 `digital_inout`
 ====================================================
 
-Digital input/output of the MCP230xx.
+Digital input/output of the PI4IOE5V9xxx.
 
 * Author(s): Tony DiCola
 """
@@ -16,13 +16,13 @@ import digitalio
 
 try:
     from typing import Optional
-    from adafruit_mcp230xx.mcp23xxx import MCP23XXX
+    from adafruit_pi4ioe5v9xxx.mcp23xxx import MCP23XXX
     from digitalio import Pull, Direction
 except ImportError:
     pass
 
 __version__ = "0.0.0+auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
+__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PI4IOE5V9xxx.git"
 
 
 # Internal helpers to simplify setting and getting a bit inside an integer.
@@ -39,10 +39,10 @@ def _clear_bit(val, bit: int) -> int:
 
 
 class DigitalInOut:
-    """Digital input/output of the MCP230xx.  The interface is exactly the
+    """Digital input/output of the PI4IOE5V9xxx.  The interface is exactly the
     same as the digitalio.DigitalInOut class, however:
 
-      * MCP230xx family does not support pull-down resistors;
+      * PI4IOE5V9xxx family does not support pull-down resistors;
       * MCP23016 does not support pull-up resistors.
 
     Exceptions will be thrown when attempting to set unsupported pull
@@ -50,7 +50,7 @@ class DigitalInOut:
     """
 
     def __init__(self, pin_number: int, mcp230xx: MCP23XXX) -> None:
-        """Specify the pin number of the MCP230xx (0...7 for MCP23008, or 0...15
+        """Specify the pin number of the PI4IOE5V9xxx (0...7 for MCP23008, or 0...15
         for MCP23017) and MCP23008 instance.
         """
         self._pin = pin_number
