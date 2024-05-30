@@ -19,6 +19,14 @@ Introduction
 
 CircuitPython module for the PI4IOE5V9xxx series I2C I/O extenders.
 
+CURRENTLY IN PROGRESS. FORKED FROM https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx
+
+
+
+
+
+
+
 Dependencies
 =============
 This driver depends on:
@@ -58,7 +66,31 @@ To install in a virtual environment in your current project:
 Usage Example
 =============
 
-See examples/pi4ioe5v9xxx_simpletest.py for a demo of the usage.
+See examples/ for more examples of usage.
+
+Single Ended
+------------
+
+.. code-block:: python
+
+    import time
+    import board
+    import busio
+    import adafruit_ads1x15.ads1015 as ADS
+    from adafruit_ads1x15.analog_in import AnalogIn
+
+    # Create the I2C bus
+    i2c = busio.I2C(board.SCL, board.SDA)
+
+    # Create the ADC object using the I2C bus
+    ads = ADS.ADS1015(i2c)
+
+    # Create single-ended input on channel 0
+    chan = AnalogIn(ads, ADS.P0)
+
+    # Create differential input between channel 0 and 1
+    #chan = AnalogIn(ads, ADS.P0, ADS.P1)
+
 
 Documentation
 =============
