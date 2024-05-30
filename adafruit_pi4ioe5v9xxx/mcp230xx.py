@@ -1,19 +1,28 @@
 # SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
 # SPDX-FileCopyrightText: 2019 Carter Nelson
 # SPDX-FileCopyrightText: 2021 Red_M
+# SPDX-FileCopyrightText: 2024 Teslafly
 #
 # SPDX-License-Identifier: MIT
 
 """
-`mcp230xx`
+`pi4ioe5v9xxx`
 ====================================================
 
-CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
+CircuitPython module for PI4IOE5V9xxx series of I2C I/O extenders.
 
 * Author(s): Tony DiCola, Red_M (2021)
+             Teslafly (2024)
 """
 
-from .mcp23xxx import MCP23XXX
+from adafruit_bus_device import i2c_device
+
+try:
+    from typing import Optional
+    from busio import I2C
+    import digitalio
+except ImportError:
+    pass
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PI4IOE5V9xxx.git"
@@ -25,8 +34,17 @@ _BUFFER = bytearray(3)
 
 
 # pylint: disable=too-few-public-methods
-class MCP230XX(MCP23XXX):
+class PI4IOE5V9xxx:
     """Base class for PI4IOE5V9xxx devices."""
+
+    def __init__(
+        self,
+        bus_device: I2C,
+        address: int,
+        chip_select: Optional[digitalio.DigitalInOut] = None,
+        baudrate: int = 100000,
+    ) -> None:
+        self._device = i2c_device.I2CDevice(bus_device, address)
 
     def _read_u16le(self, register: int) -> int:
         # Read an unsigned 16 bit little endian value from the specified 8-bit

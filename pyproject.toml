@@ -10,8 +10,8 @@ requires = [
 ]
 
 [project]
-name = "adafruit-circuitpython-mcp230xx"
-description = "CircuitPython library for controlling a MCP23008 or MCP23017 I2C GPIO expander."
+name = "adafruit-circuitpython-pi4ioe5v9xxx"
+description = "CircuitPython module for PI4IOE5V9xxx series of I2C I/O extenders."
 version = "0.0.0+auto.0"
 readme = "README.rst"
 authors = [
@@ -41,7 +41,7 @@ classifiers = [
 dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.setuptools]
-packages = ["adafruit_mcp230xx"]
+packages = ["adafruit_pi4ioe5v9xxx"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}

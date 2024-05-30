@@ -17,9 +17,11 @@ Introduction
     :target: https://github.com/psf/black
     :alt: Code Style: Black
 
-CircuitPython module for the PI4IOE5V9xxx series I2C I/O extenders.
+CircuitPython module for PI4IOE5V9xxx series of I2C I/O extenders.
 
-CURRENTLY IN PROGRESS. FORKED FROM https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx
+
+
+REFACTOR CURRENTLY IN PROGRESS. FORKED FROM https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx
 
 
 
@@ -98,6 +100,12 @@ Documentation
 API documentation for this library can be found on `Read the Docs <https://docs.circuitpython.org/projects/pi4ioe5v9xxx/en/latest/>`_.
 
 For information on building library documentation, please check out `this guide <https://learn.adafruit.com/creating-and-sharing-a-circuitpython-library/sharing-our-docs-on-readthedocs#sphinx-5-1>`_.
+
+Supported Devices
+=============
+
+* PI4IOE5V6416 
+* KTS1622
 
 
 Contributing
