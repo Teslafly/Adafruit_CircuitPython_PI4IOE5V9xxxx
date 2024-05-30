@@ -39,32 +39,41 @@ except ImportError:
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PI4IOE5V9xxx.git"
 
-_MCP23017_ADDRESS = const(0x20)
-_MCP23017_IODIRA = const(0x00)
-_MCP23017_IODIRB = const(0x01)
-_MCP23017_IPOLA = const(0x02)
-_MCP23017_IPOLB = const(0x03)
-_MCP23017_GPINTENA = const(0x04)
-_MCP23017_DEFVALA = const(0x06)
-_MCP23017_INTCONA = const(0x08)
-_MCP23017_IOCON = const(0x0A)
-_MCP23017_GPPUA = const(0x0C)
-_MCP23017_GPPUB = const(0x0D)
-_MCP23017_GPIOA = const(0x12)
-_MCP23017_GPIOB = const(0x13)
-_MCP23017_INTFA = const(0x0E)
-_MCP23017_INTFB = const(0x0F)
-_MCP23017_INTCAPA = const(0x10)
-_MCP23017_INTCAPB = const(0x11)
+_PI4IOE5V6416_ADDRESS = const(0x20)
+_PI4IOE5V6416_IN0 = const(0x00)  # Input port 0
+_PI4IOE5V6416_IN1 = const(0x01)  # Input port 1
+_PI4IOE5V6416_OUT0 = const(0x02)  # Output port 0
+_PI4IOE5V6416_OUT1 = const(0x03)  # Output port 1
+_PI4IOE5V6416_POL0 = const(0x04)  # Polarity Inversion port 0
+_PI4IOE5V6416_POL1 = const(0x05)  # Polarity Inversion port 1
+_PI4IOE5V6416_IODIR0 = const(0x06)  # Configuration port 0
+_PI4IOE5V6416_IODIR1 = const(0x07)  # Configuration port 1
+_PI4IOE5V6416_ODRV00 = const(0x40)  # Output drive strength register 00
+_PI4IOE5V6416_ODRV01 = const(0x41)  # Output drive strength register 0
+_PI4IOE5V6416_ODRV10 = const(0x42)  # Output drive strength register 1
+_PI4IOE5V6416_ODRV11 = const(0x43)  # Output drive strength register 1
+_PI4IOE5V6416_ILATCH0 = const(0x44)  # Input latch register 0
+_PI4IOE5V6416_ILATCH1 = const(0x45)  # Input latch register 1
+_PI4IOE5V6416_PULLEN0 = const(0x46)  # Pull-up/pull-down enable register 0
+_PI4IOE5V6416_PULLEN1 = const(0x47)  # Pull-up/pull-down enable register 1
+_PI4IOE5V6416_PULLSEL0 = const(0x48)  # Pull-up/pull-down selection register 0
+_PI4IOE5V6416_PULLSEL1 = const(0x49)  # Pull-up/pull-down selection register 1
+_PI4IOE5V6416_INTMSK0 = const(0x4A)  # Interrupt mask register 0
+_PI4IOE5V6416_INTMSK1 = const(0x4B)  # Interrupt mask register 1
+_PI4IOE5V6416_INTSTAT0 = const(0x4C)  # Interrupt status register 0
+_PI4IOE5V6416_INTSTAT1 = const(0x4D)  # Interrupt status register 1
+_PI4IOE5V6416_OPNDRNCFG = const(0x4E)  # Output port configuration register
 
 
-class MCP23017(MCP230XX):
-    """Supports MCP23017 instance on specified I2C bus and optionally
+
+class PI4IOE5V6416(PI4IOE5V9xxx):
+    """Supports PI4IOE5V6416 instance on specified I2C bus and optionally
     at the specified I2C address.
+    also cpmpatable as superset for KTS1622
     """
 
     def __init__(
-        self, i2c: I2C, address: int = _MCP23017_ADDRESS, reset: bool = True
+        self, i2c: I2C, address: int = _PI4IOE5V6416_ADDRESS, reset: bool = True
     ) -> None:
         super().__init__(i2c, address)
         if reset:

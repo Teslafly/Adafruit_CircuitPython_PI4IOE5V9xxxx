@@ -22,7 +22,7 @@ Implementation Notes
 """
 
 from micropython import const
-from .mcp230xx import MCP230XX
+from .pi4ioe5v9xxx import MCP230XX
 from .digital_inout import DigitalInOut
 
 try:
