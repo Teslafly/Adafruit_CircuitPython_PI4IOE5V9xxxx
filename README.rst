@@ -104,8 +104,11 @@ For information on building library documentation, please check out `this guide 
 Supported Devices
 =============
 
-* PI4IOE5V6416 
-* KTS1622
+* PI4IOE5V6416 (16 IO, full io)
+* KTS1622 (16 IO)
+
+Not Supported:
+* PI4IOE5V9535 (16, no pulldown)
 
 
 Contributing

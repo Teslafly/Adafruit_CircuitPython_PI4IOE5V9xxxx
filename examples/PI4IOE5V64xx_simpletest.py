@@ -11,7 +11,7 @@ import board
 import busio
 import digitalio
 
-from adafruit_pi4ioe5v9xxx.mcp23008 import MCP23008
+from adafruit_pi4ioe5v9xxx.PI4IOE5V6416 import PI4IOE5V6416
 
 # from adafruit_mcp230xx.mcp23017 import MCP23017
 
@@ -21,12 +21,12 @@ i2c = busio.I2C(board.SCL, board.SDA)
 
 # Create an instance of either the MCP23008 or MCP23017 class depending on
 # which chip you're using:
-mcp = MCP23008(i2c)  # MCP23008
-# mcp = MCP23017(i2c)  # MCP23017
+# io_exp = MCP23008(i2c)  # MCP23008
+io_exp = PI4IOE5V6416(i2c)  # PI4IOE5V6416
 
 # Optionally change the address of the device if you set any of the A0, A1, A2
 # pins.  Specify the new address with a keyword parameter:
-# mcp = MCP23017(i2c, address=0x21)  # MCP23017 w/ A0 set
+# io_exp = MCP23017(i2c, address=0x21)  # MCP23017 w/ A0 set
 
 # Now call the get_pin function to get an instance of a pin on the chip.
 # This instance will act just like a digitalio.DigitalInOut class instance
@@ -34,8 +34,8 @@ mcp = MCP23008(i2c)  # MCP23008
 # resistors, only pull-up!).  For the MCP23008 you specify a pin number from 0
 # to 7 for the GP0...GP7 pins.  For the MCP23017 you specify a pin number from
 # 0 to 15 for the GPIOA0...GPIOA7, GPIOB0...GPIOB7 pins (i.e. pin 12 is GPIOB4).
-pin0 = mcp.get_pin(0)
-pin1 = mcp.get_pin(1)
+pin0 = io_exp.get_pin(0)
+pin1 = io_exp.get_pin(1)
 
 # Setup pin0 as an output that's at a high logic level.
 pin0.switch_to_output(value=True)

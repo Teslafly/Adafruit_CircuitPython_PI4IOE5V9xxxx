@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
 # SPDX-FileCopyrightText: 2019 Carter Nelson
 # SPDX-FileCopyrightText: 2021 Red_M
-# SPDX-FileCopyrightText: 2024 Teslafly
+# SPDX-FileCopyrightText: 2024 Marshall Scholz
 #
 # SPDX-License-Identifier: MIT
 

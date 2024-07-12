@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: 2019 Carter Nelson
 #
 # SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2024 Marshall Scholz
 
 """
 `digital_inout`
@@ -16,7 +17,7 @@ import digitalio
 
 try:
     from typing import Optional
-    from adafruit_pi4ioe5v9xxx.mcp23xxx import MCP23XXX
+    from adafruit_pi4ioe5v9xxx.pi4ioe5v9xxx import PI4IOE5V9xxx
     from digitalio import Pull, Direction
 except ImportError:
     pass
