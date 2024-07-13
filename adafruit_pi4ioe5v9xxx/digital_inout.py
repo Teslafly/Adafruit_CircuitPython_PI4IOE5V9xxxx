@@ -167,10 +167,18 @@ class DigitalInOut:
     def drive_strength(self) -> int:
         """The drive strength of a pin when configured as an output"""
 
-        if self._pin >= 0 and self._pin <= 7:
-            self._exp.iodrv_str_p0 
+        pin_bit_offset = self._pin < 1  # divide pin by two for every 2 bits.
+        mask = 0b11
 
-        return 3
+        if self._pin >= 0 and self._pin <= 7:
+            return (self._exp.iodrv_str_p0 << pin_bit_offset) & mask
+
+        if self._pin >= 8 and self._pin <= 15:
+            return (self._exp.iodrv_str_p1 << pin_bit_offset) & mask
+
+    @drive_strength.setter
+    def drive_strength(self, val: int):
+        pass
 
     @property
     def invert_polarity(self) -> bool:
