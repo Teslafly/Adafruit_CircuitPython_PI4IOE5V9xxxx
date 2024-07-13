@@ -89,8 +89,69 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
             raise ValueError("Pin number must be 0-15.")
         return DigitalInOut(pin, self)
 
-    # IO output registers
+    # IO input read registers
+    @property
+    def gpio_in(self) -> int:
+        """The raw GPIO Input registers. Read only.  Each bit represents the
+        input value of the associated pin (0 = low, 1 = high).
+        Input valiue can be inverted using POLx Registers.
+        """
+        return self._read_u16le(_PI4IOE5V6416_IN0)
 
+    @property
+    def gpio_in_p0(self) -> int:
+        """The raw GPIO port 0 Input register. Read only.  Each bit represents the
+        input value of the associated pin (0 = low, 1 = high).
+        Input valiue can be inverted using POLx Registers.
+        """
+        return self._read_u8(_PI4IOE5V6416_IN0)
+
+    @property
+    def gpio_in_p1(self) -> int:
+        """The raw GPIO port 0 Input register. Read only.  Each bit represents the
+        input value of the associated pin (0 = low, 1 = high).
+        Input valiue can be inverted using POLx Registers.
+        """
+        return self._read_u8(_PI4IOE5V6416_IN1)
+
+    # IO input polarity
+    @property
+    def ipol(self) -> int:
+        """The raw POL input register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted).
+        Applies to inputs ony.
+        """
+        return self._read_u16le(_PI4IOE5V6416_POL0)
+
+    @ipol.setter
+    def ipol(self, val: int) -> None:
+        self._write_u16le(_PI4IOE5V6416_POL0, val)
+
+    @property
+    def ipol_p0(self) -> int:
+        """The raw POL port 0 input register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted).
+        Applies to inputs ony.
+        """
+        return self._read_u8(_PI4IOE5V6416_POL0)
+
+    @ipol_p0.setter
+    def ipol_p0(self, val: int) -> None:
+        self._write_u8(_PI4IOE5V6416_POL0, val)
+
+    @property
+    def ipol_p1(self) -> int:
+        """The raw POL port 1 input register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted).
+        Applies to inputs ony.
+        """
+        return self._read_u8(_PI4IOE5V6416_POL1)
+
+    @ipol_p1.setter
+    def ipol_p1(self, val: int) -> None:
+        self._write_u8(_PI4IOE5V6416_POL1, val)
+
+    # IO output registers
     @property
     def gpio_out(self) -> int:
         """The raw GPIO output register.  Each bit represents the
@@ -135,7 +196,6 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
         return self._read_u16le(_PI4IOE5V6416_IODIR0)
 
     # IO direction
-
     @iodir.setter
     def iodir(self, val: int) -> None:
         self._write_u16le(_PI4IOE5V6416_IODIR0, val)
@@ -162,79 +222,118 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
     def iodir_p1(self, val: int) -> None:
         self._write_u8(_PI4IOE5V6416_IODIR1, val)
 
-    # IO input polarity
+    # IO drive strength
+    @property
+    def iodrv_str_p0(self) -> int:
+        """The raw ODRV0 drive strength register.  Every 2 bits represents
+        drive strength of a pin, ranging from 0 to 3.
+        """
+
+        # todo, this is 32 bits of data across 4 bytes. not 16.
+
+        # _PI4IOE5V6416_ODRV00
+        # _PI4IOE5V6416_ODRV01
+
+        return self._read_u16le(_PI4IOE5V6416_ODRV00)
+
+    @iodrv_str_p0.setter
+    def iodrv_str_p0(self, val: int) -> None:
+        self._write_u16le(_PI4IOE5V6416_ODRV00, val)
+
+        # IO drive strength
+    @property
+    def iodrv_str_p1(self) -> int:
+        """The raw ODRV1 drive strength register.  Every 2 bits represents
+        drive strength of a pin, ranging from 0 to 3.
+        """
+
+        # _PI4IOE5V6416_ODRV10
+        # _PI4IOE5V6416_ODRV11
+        return self._read_u16le(_PI4IOE5V6416_ODRV10)
+
+    @iodrv_str_p1.setter
+    def iodrv_str_p1(self, val: int) -> None:
+        self._write_u16le(_PI4IOE5V6416_ODRV00, val)
+
+    # Pull-up/pull-down enable
+    @property
+    def pull_en(self) -> int:
+        """The raw pullup/pulldown enable registers.  Each bit represents
+        if a pull-xx is enabled on the specified pin (1 = pull-xx enabled,
+        0 = pull-xx disabled).
+        Pullup/pulldown selection occurs in the PULLSEL register.
+        """
+        return self._read_u16le(_PI4IOE5V6416_PULLEN0)
+
+    @pull_en.setter
+    def pull_en(self, val: int) -> None:
+        self._write_u16le(_PI4IOE5V6416_PULLEN0, val)
 
     @property
-    def ipol(self) -> int:
-        """The raw POL input register.  Each bit represents the
-        polarity value of the associated pin (0 = normal, 1 = inverted).
-        Applies to inputs ony.
+    def pull_en_p0(self) -> int:
+        """The raw pullup/pulldown port 0 enable registers.  Each bit represents
+        if a pull-xx is enabled on the specified pin (1 = pull-xx enabled,
+        0 = pull-xx disabled).
+        Pullup/pulldown selection occurs in the PULLSEL register.
         """
-        return self._read_u16le(_PI4IOE5V6416_POL0)
+        return self._read_u8(_PI4IOE5V6416_PULLEN0)
 
-    @ipol.setter
-    def ipol(self, val: int) -> None:
-        self._write_u16le(_PI4IOE5V6416_POL0, val)
+    @pull_en_p0.setter
+    def pull_en_p0(self, val: int) -> None:
+        self._write_u8(_PI4IOE5V6416_PULLEN0, val)
 
     @property
-    def ipol_p0(self) -> int:
-        """The raw POL port 0 input register.  Each bit represents the
-        polarity value of the associated pin (0 = normal, 1 = inverted).
-        Applies to inputs ony.
+    def pull_en_p1(self) -> int:
+        """The raw pullup/pulldown port 1 enable registers.  Each bit represents
+        if a pull-xx is enabled on the specified pin (1 = pull-xx enabled,
+        0 = pull-xx disabled).
+        Pullup/pulldown selection occurs in the PULLSEL register.
         """
-        return self._read_u8(_PI4IOE5V6416_POL0)
+        return self._read_u8(_PI4IOE5V6416_PULLEN1)
 
-    @ipol_p0.setter
-    def ipol_p0(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_POL0, val)
+    @pull_en_p1.setter
+    def pull_en_p1(self, val: int) -> None:
+        self._write_u8(_PI4IOE5V6416_PULLEN1, val)
+
+    # Pull-up/Pull-down select
+    @property
+    def pull_sel(self) -> int:
+        """The raw pullup/pulldown selection registers.  Each bit represents
+        if a pull-up or pull-down is applied on the specified pin when the 
+        PULLEN register is enabled for that pin. 
+        (1 = pull-up 100kohm, 0 = pull-down 100kohm).
+        """
+        return self._read_u16le(_PI4IOE5V6416_PULLSEL0)
+
+    @pull_sel.setter
+    def pull_sel(self, val: int) -> None:
+        self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
 
     @property
-    def ipol_p1(self) -> int:
-        """The raw POL port 1 input register.  Each bit represents the
-        polarity value of the associated pin (0 = normal, 1 = inverted).
-        Applies to inputs ony.
+    def pull_sel_p0(self) -> int:
+        """The raw pullup/pulldown selection registers.  Each bit represents
+        if a pull-up or pull-down is applied on the specified pin when the 
+        PULLEN register is enabled for that pin. 
+        (1 = pull-up 100kohm, 0 = pull-down 100kohm).
         """
-        return self._read_u8(_PI4IOE5V6416_POL1)
+        return self._read_u16le(_PI4IOE5V6416_PULLSEL0)
 
-    @ipol_p1.setter
-    def ipol_p1(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_POL1, val)
+    @pull_sel_p0.setter
+    def pull_sel_p0(self, val: int) -> None:
+        self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
 
-    # @property
-    # def gppu(self) -> int:
-    #     """The raw GPPU pull-up register.  Each bit represents
-    #     if a pull-up is enabled on the specified pin (1 = pull-up enabled,
-    #     0 = pull-up disabled).  Note pull-down resistors are NOT supported!
-    #     """
-    #     return self._read_u16le(_PI4IOE5V6416_GPPUA)
+    @property
+    def pull_sel_p1(self) -> int:
+        """The raw pullup/pulldown selection registers.  Each bit represents
+        if a pull-up or pull-down is applied on the specified pin when the 
+        PULLEN register is enabled for that pin. 
+        (1 = pull-up 100kohm, 0 = pull-down 100kohm).
+        """
+        return self._read_u16le(_PI4IOE5V6416_PULLSEL0)
 
-    # @gppu.setter
-    # def gppu(self, val: int) -> None:
-    #     self._write_u16le(_PI4IOE5V6416_GPPUA, val)
-
-    # @property
-    # def gppua(self) -> int:
-    #     """The raw GPPU A pull-up register.  Each bit represents
-    #     if a pull-up is enabled on the specified pin (1 = pull-up enabled,
-    #     0 = pull-up disabled).  Note pull-down resistors are NOT supported!
-    #     """
-    #     return self._read_u8(_PI4IOE5V6416_GPPUA)
-
-    # @gppua.setter
-    # def gppua(self, val: int) -> None:
-    #     self._write_u8(_PI4IOE5V6416_GPPUA, val)
-
-    # @property
-    # def gppub(self) -> int:
-    #     """The raw GPPU B pull-up register.  Each bit represents
-    #     if a pull-up is enabled on the specified pin (1 = pull-up enabled,
-    #     0 = pull-up disabled).  Note pull-down resistors are NOT supported!
-    #     """
-    #     return self._read_u8(_PI4IOE5V6416_GPPUB)
-
-    # @gppub.setter
-    # def gppub(self, val: int) -> None:
-    #     self._write_u8(_PI4IOE5V6416_GPPUB, val)
+    @pull_sel_p1.setter
+    def pull_sel_p1(self, val: int) -> None:
+        self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
 
     # @property
     # def interrupt_configuration(self) -> int:

@@ -43,38 +43,38 @@ class DigitalInOut:
     """Digital input/output of the PI4IOE5V9xxx.  The interface is exactly the
     same as the digitalio.DigitalInOut class, however:
 
-      * PI4IOE5V9xxx family does not support pull-down resistors;
-      * MCP23016 does not support pull-up resistors.
+      * PI4IOE5V9xxx family also supports pin drive strengths.
 
-    Exceptions will be thrown when attempting to set unsupported pull
-    configurations.
+    Exceptions will be thrown when attempting to do something the expander can not do.
     """
 
-    def __init__(self, pin_number: int, mcp230xx: MCP23XXX) -> None:
-        """Specify the pin number of the PI4IOE5V9xxx (0...7 for MCP23008, or 0...15
-        for MCP23017) and MCP23008 instance.
+    def __init__(self, pin_number: int, pi4ioe5v9xxx: PI4IOE5V9xxx) -> None:
+        """Specify the pin number of the PI4IOE5V9xxx (0...7 for PI4IOE5V9x08, or 0...15
+        for PI4IOE5V6416) and PI4IOE5V9xxx instance.
         """
         self._pin = pin_number
-        self._mcp = mcp230xx
+        self._exp = pi4ioe5v9xxx
 
     # kwargs in switch functions below are _necessary_ for compatibility
     # with DigitalInout class (which allows specifying pull, etc. which
     # is unused by this class).  Do not remove them, instead turn off pylint
     # in this case.
     # pylint: disable=unused-argument
-    def switch_to_output(self, value: bool = False, **kwargs) -> None:
+    def switch_to_output(
+        self, value: bool = False, drivestrength: int = 3, **kwargs
+    ) -> None:
         """Switch the pin state to a digital output with the provided starting
         value (True/False for high or low, default is False/low).
         """
         self.direction = digitalio.Direction.OUTPUT
         self.value = value
+        self.drivestrength = drivestrength
 
     def switch_to_input(
         self, pull: Pull = None, invert_polarity: bool = False, **kwargs
     ) -> None:
         """Switch the pin state to a digital input with the provided starting
-        pull-up resistor state (optional, no pull-up by default) and input polarity.  Note that
-        pull-down resistors are NOT supported!
+        pull-up resistor state (optional, no pull-xx by default) and input polarity.
         """
         self.direction = digitalio.Direction.INPUT
         self.pull = pull
@@ -88,30 +88,41 @@ class DigitalInOut:
         low.  Note you must configure as an output or input appropriately
         before reading and writing this value.
         """
-        return _get_bit(self._mcp.gpio, self._pin)
+
+        if self.direction == digitalio.Direction.INPUT:
+            reg = self._exp.gpio_in
+        else:
+            reg = self._exp.gpio_out
+
+        return _get_bit(reg, self._pin)
 
     @value.setter
     def value(self, val: bool) -> None:
-        if val:
-            self._mcp.gpio = _enable_bit(self._mcp.gpio, self._pin)
+        if self.direction == digitalio.Direction.INPUT:
+            reg = self._exp.gpio_in
         else:
-            self._mcp.gpio = _clear_bit(self._mcp.gpio, self._pin)
+            reg = self._exp.gpio_out
+
+        if val:
+            self._exp.gpio = _enable_bit(reg, self._pin)
+        else:
+            self._exp.gpio = _clear_bit(reg, self._pin)
 
     @property
     def direction(self) -> bool:
         """The direction of the pin, either True for an input or
         False for an output.
         """
-        if _get_bit(self._mcp.iodir, self._pin):
+        if _get_bit(self._exp.iodir, self._pin):
             return digitalio.Direction.INPUT
         return digitalio.Direction.OUTPUT
 
     @direction.setter
     def direction(self, val: Direction) -> None:
         if val == digitalio.Direction.INPUT:
-            self._mcp.iodir = _enable_bit(self._mcp.iodir, self._pin)
+            self._exp.iodir = _enable_bit(self._exp.iodir, self._pin)
         elif val == digitalio.Direction.OUTPUT:
-            self._mcp.iodir = _clear_bit(self._mcp.iodir, self._pin)
+            self._exp.iodir = _clear_bit(self._exp.iodir, self._pin)
         else:
             raise ValueError("Expected INPUT or OUTPUT direction!")
 
@@ -122,10 +133,16 @@ class DigitalInOut:
         disable it.  Pull-down resistors are NOT supported!
         """
         try:
-            if _get_bit(self._mcp.gppu, self._pin):
-                return digitalio.Pull.UP
+            if _get_bit(self._exp.pull_en, self._pin):
+                if _get_bit(self._exp.pull_sel, self._pin):
+                    return digitalio.Pull.UP
+                else:
+                    return digitalio.Pull.DOWN
+            else:
+                return None
+
         except AttributeError as error:
-            # MCP23016 doesn't have a `gppu` register.
+            # Some expanders do not support pullups and/or pulldowns.
             raise ValueError("Pull-up/pull-down resistors not supported.") from error
         return None
 
@@ -133,29 +150,40 @@ class DigitalInOut:
     def pull(self, val: Pull) -> None:
         try:
             if val is None:
-                self._mcp.gppu = _clear_bit(self._mcp.gppu, self._pin)
+                self._exp.pull_en = _clear_bit(self._exp.pull_en, self._pin)
             elif val == digitalio.Pull.UP:
-                self._mcp.gppu = _enable_bit(self._mcp.gppu, self._pin)
+                self._exp.pull_sel = _enable_bit(self._exp.pull_sel, self._pin)
+                self._exp.pull_en = _enable_bit(self._exp.pull_en, self._pin)
             elif val == digitalio.Pull.DOWN:
-                raise ValueError("Pull-down resistors are not supported!")
+                self._exp.pull_sel = _clear_bit(self._exp.pull_sel, self._pin)
+                self._exp.pull_en = _enable_bit(self._exp.pull_en, self._pin)
             else:
                 raise ValueError("Expected UP, DOWN, or None for pull state!")
         except AttributeError as error:
-            # MCP23016 doesn't have a `gppu` register.
+            # Some expanders do not support pullups and/or pulldowns.
             raise ValueError("Pull-up/pull-down resistors not supported.") from error
+
+    @property
+    def drive_strength(self) -> int:
+        """The drive strength of a pin when configured as an output"""
+
+        if self._pin >= 0 and self._pin <= 7:
+            self._exp.iodrv_str_p0 
+
+        return 3
 
     @property
     def invert_polarity(self) -> bool:
         """The polarity of the pin, either True for an Inverted or
         False for an normal.
         """
-        if _get_bit(self._mcp.ipol, self._pin):
+        if _get_bit(self._exp.ipol, self._pin):
             return True
         return False
 
     @invert_polarity.setter
     def invert_polarity(self, val: bool) -> None:
         if val:
-            self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
+            self._exp.ipol = _enable_bit(self._exp.ipol, self._pin)
         else:
-            self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
+            self._exp.ipol = _clear_bit(self._exp.ipol, self._pin)
