@@ -98,31 +98,28 @@ class DigitalInOut:
 
     @value.setter
     def value(self, val: bool) -> None:
-        if self.direction == digitalio.Direction.INPUT:
-            reg = self._exp.gpio_in
-        else:
-            reg = self._exp.gpio_out
+        # only set the output as gpio_in is read only.
 
         if val:
-            self._exp.gpio = _enable_bit(reg, self._pin)
+            self._exp.gpio_out = _enable_bit(self._exp.gpio_out, self._pin)
         else:
-            self._exp.gpio = _clear_bit(reg, self._pin)
+            self._exp.gpio_out = _clear_bit(self._exp.gpio_out, self._pin)
 
     @property
     def direction(self) -> bool:
         """The direction of the pin, either True for an input or
         False for an output.
         """
-        if _get_bit(self._exp.iodir, self._pin):
+        if _get_bit(self._exp.gpio_dir, self._pin):
             return digitalio.Direction.INPUT
         return digitalio.Direction.OUTPUT
 
     @direction.setter
     def direction(self, val: Direction) -> None:
         if val == digitalio.Direction.INPUT:
-            self._exp.iodir = _enable_bit(self._exp.iodir, self._pin)
+            self._exp.gpio_dir = _enable_bit(self._exp.gpio_dir, self._pin)
         elif val == digitalio.Direction.OUTPUT:
-            self._exp.iodir = _clear_bit(self._exp.iodir, self._pin)
+            self._exp.gpio_dir = _clear_bit(self._exp.gpio_dir, self._pin)
         else:
             raise ValueError("Expected INPUT or OUTPUT direction!")
 

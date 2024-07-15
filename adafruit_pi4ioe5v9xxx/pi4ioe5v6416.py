@@ -127,29 +127,29 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
     def ipol(self, val: int) -> None:
         self._write_u16le(_PI4IOE5V6416_POL0, val)
 
-    @property
-    def ipol_p0(self) -> int:
-        """The raw POL port 0 input register.  Each bit represents the
-        polarity value of the associated pin (0 = normal, 1 = inverted).
-        Applies to inputs ony.
-        """
-        return self._read_u8(_PI4IOE5V6416_POL0)
+    # @property
+    # def ipol_p0(self) -> int:
+    #     """The raw POL port 0 input register.  Each bit represents the
+    #     polarity value of the associated pin (0 = normal, 1 = inverted).
+    #     Applies to inputs ony.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_POL0)
 
-    @ipol_p0.setter
-    def ipol_p0(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_POL0, val)
+    # @ipol_p0.setter
+    # def ipol_p0(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_POL0, val)
 
-    @property
-    def ipol_p1(self) -> int:
-        """The raw POL port 1 input register.  Each bit represents the
-        polarity value of the associated pin (0 = normal, 1 = inverted).
-        Applies to inputs ony.
-        """
-        return self._read_u8(_PI4IOE5V6416_POL1)
+    # @property
+    # def ipol_p1(self) -> int:
+    #     """The raw POL port 1 input register.  Each bit represents the
+    #     polarity value of the associated pin (0 = normal, 1 = inverted).
+    #     Applies to inputs ony.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_POL1)
 
-    @ipol_p1.setter
-    def ipol_p1(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_POL1, val)
+    # @ipol_p1.setter
+    # def ipol_p1(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_POL1, val)
 
     # IO output registers
     @property
@@ -164,63 +164,63 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
     def gpio_out(self, val: int) -> None:
         self._write_u16le(_PI4IOE5V6416_OUT0, val)
 
+    # @property
+    # def gpio_out_p0(self) -> int:
+    #     """The raw GPIO A output register.  Each bit represents the
+    #     output value of the associated pin (0 = low, 1 = high), assuming that
+    #     pin has been configured as an output previously.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_OUT0)
+
+    # @gpio_out_p0.setter
+    # def gpio_out_p0(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_OUT0, val)
+
+    # @property
+    # def gpio_out_p1(self) -> int:
+    #     """The raw GPIO B output register.  Each bit represents the
+    #     output value of the associated pin (0 = low, 1 = high), assuming that
+    #     pin has been configured as an output previously.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_OUT1)
+
+    # @gpio_out_p1.setter
+    # def gpio_out_p1(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_OUT1, val)
+
     @property
-    def gpio_out_p0(self) -> int:
-        """The raw GPIO A output register.  Each bit represents the
-        output value of the associated pin (0 = low, 1 = high), assuming that
-        pin has been configured as an output previously.
-        """
-        return self._read_u8(_PI4IOE5V6416_OUT0)
-
-    @gpio_out_p0.setter
-    def gpio_out_p0(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_OUT0, val)
-
-    @property
-    def gpio_out_p1(self) -> int:
-        """The raw GPIO B output register.  Each bit represents the
-        output value of the associated pin (0 = low, 1 = high), assuming that
-        pin has been configured as an output previously.
-        """
-        return self._read_u8(_PI4IOE5V6416_OUT1)
-
-    @gpio_out_p1.setter
-    def gpio_out_p1(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_OUT1, val)
-
-    @property
-    def iodir(self) -> int:
+    def gpio_dir(self) -> int:
         """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u16le(_PI4IOE5V6416_IODIR0)
 
     # IO direction
-    @iodir.setter
-    def iodir(self, val: int) -> None:
+    @gpio_dir.setter
+    def gpio_dir(self, val: int) -> None:
         self._write_u16le(_PI4IOE5V6416_IODIR0, val)
 
-    @property
-    def iodir_p0(self) -> int:
-        """The raw IODIR A direction register.  Each bit represents
-        direction of a pin, either 1 for an input or 0 for an output mode.
-        """
-        return self._read_u8(_PI4IOE5V6416_IODIR0)
+    # @property
+    # def iodir_p0(self) -> int:
+    #     """The raw IODIR A direction register.  Each bit represents
+    #     direction of a pin, either 1 for an input or 0 for an output mode.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_IODIR0)
 
-    @iodir_p0.setter
-    def iodir_p0(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_IODIR0, val)
+    # @iodir_p0.setter
+    # def iodir_p0(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_IODIR0, val)
 
-    @property
-    def iodir_p1(self) -> int:
-        """The raw IODIR B direction register.  Each bit represents
-        direction of a pin, either 1 for an input or 0 for an output mode.
-        """
-        return self._read_u8(_PI4IOE5V6416_IODIR1)
+    # @property
+    # def iodir_p1(self) -> int:
+    #     """The raw IODIR B direction register.  Each bit represents
+    #     direction of a pin, either 1 for an input or 0 for an output mode.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_IODIR1)
 
-    @iodir_p1.setter
-    def iodir_p1(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_IODIR1, val)
+    # @iodir_p1.setter
+    # def iodir_p1(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_IODIR1, val)
 
     # IO drive strength
     @property
@@ -269,31 +269,31 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
     def pull_en(self, val: int) -> None:
         self._write_u16le(_PI4IOE5V6416_PULLEN0, val)
 
-    @property
-    def pull_en_p0(self) -> int:
-        """The raw pullup/pulldown port 0 enable registers.  Each bit represents
-        if a pull-xx is enabled on the specified pin (1 = pull-xx enabled,
-        0 = pull-xx disabled).
-        Pullup/pulldown selection occurs in the PULLSEL register.
-        """
-        return self._read_u8(_PI4IOE5V6416_PULLEN0)
+    # @property
+    # def pull_en_p0(self) -> int:
+    #     """The raw pullup/pulldown port 0 enable registers.  Each bit represents
+    #     if a pull-xx is enabled on the specified pin (1 = pull-xx enabled,
+    #     0 = pull-xx disabled).
+    #     Pullup/pulldown selection occurs in the PULLSEL register.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_PULLEN0)
 
-    @pull_en_p0.setter
-    def pull_en_p0(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_PULLEN0, val)
+    # @pull_en_p0.setter
+    # def pull_en_p0(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_PULLEN0, val)
 
-    @property
-    def pull_en_p1(self) -> int:
-        """The raw pullup/pulldown port 1 enable registers.  Each bit represents
-        if a pull-xx is enabled on the specified pin (1 = pull-xx enabled,
-        0 = pull-xx disabled).
-        Pullup/pulldown selection occurs in the PULLSEL register.
-        """
-        return self._read_u8(_PI4IOE5V6416_PULLEN1)
+    # @property
+    # def pull_en_p1(self) -> int:
+    #     """The raw pullup/pulldown port 1 enable registers.  Each bit represents
+    #     if a pull-xx is enabled on the specified pin (1 = pull-xx enabled,
+    #     0 = pull-xx disabled).
+    #     Pullup/pulldown selection occurs in the PULLSEL register.
+    #     """
+    #     return self._read_u8(_PI4IOE5V6416_PULLEN1)
 
-    @pull_en_p1.setter
-    def pull_en_p1(self, val: int) -> None:
-        self._write_u8(_PI4IOE5V6416_PULLEN1, val)
+    # @pull_en_p1.setter
+    # def pull_en_p1(self, val: int) -> None:
+    #     self._write_u8(_PI4IOE5V6416_PULLEN1, val)
 
     # Pull-up/Pull-down select
     @property
@@ -309,31 +309,31 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
     def pull_sel(self, val: int) -> None:
         self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
 
-    @property
-    def pull_sel_p0(self) -> int:
-        """The raw pullup/pulldown selection registers.  Each bit represents
-        if a pull-up or pull-down is applied on the specified pin when the 
-        PULLEN register is enabled for that pin. 
-        (1 = pull-up 100kohm, 0 = pull-down 100kohm).
-        """
-        return self._read_u16le(_PI4IOE5V6416_PULLSEL0)
+    # @property
+    # def pull_sel_p0(self) -> int:
+    #     """The raw pullup/pulldown selection registers.  Each bit represents
+    #     if a pull-up or pull-down is applied on the specified pin when the 
+    #     PULLEN register is enabled for that pin. 
+    #     (1 = pull-up 100kohm, 0 = pull-down 100kohm).
+    #     """
+    #     return self._read_u16le(_PI4IOE5V6416_PULLSEL0)
 
-    @pull_sel_p0.setter
-    def pull_sel_p0(self, val: int) -> None:
-        self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
+    # @pull_sel_p0.setter
+    # def pull_sel_p0(self, val: int) -> None:
+    #     self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
 
-    @property
-    def pull_sel_p1(self) -> int:
-        """The raw pullup/pulldown selection registers.  Each bit represents
-        if a pull-up or pull-down is applied on the specified pin when the 
-        PULLEN register is enabled for that pin. 
-        (1 = pull-up 100kohm, 0 = pull-down 100kohm).
-        """
-        return self._read_u16le(_PI4IOE5V6416_PULLSEL0)
+    # @property
+    # def pull_sel_p1(self) -> int:
+    #     """The raw pullup/pulldown selection registers.  Each bit represents
+    #     if a pull-up or pull-down is applied on the specified pin when the 
+    #     PULLEN register is enabled for that pin. 
+    #     (1 = pull-up 100kohm, 0 = pull-down 100kohm).
+    #     """
+    #     return self._read_u16le(_PI4IOE5V6416_PULLSEL0)
 
-    @pull_sel_p1.setter
-    def pull_sel_p1(self, val: int) -> None:
-        self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
+    # @pull_sel_p1.setter
+    # def pull_sel_p1(self, val: int) -> None:
+    #     self._write_u16le(_PI4IOE5V6416_PULLSEL0, val)
 
     # @property
     # def interrupt_configuration(self) -> int:
