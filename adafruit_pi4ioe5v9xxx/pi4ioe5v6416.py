@@ -85,7 +85,7 @@ class PI4IOE5V6416(PI4IOE5V9xxx):
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this PI4IOE5V6416 device.
         """
-        if not 0 <= pin <= 15:
+        if not (0 <= int(pin) <= 15):
             raise ValueError("Pin number must be 0-15.")
         return DigitalInOut(pin, self)
 

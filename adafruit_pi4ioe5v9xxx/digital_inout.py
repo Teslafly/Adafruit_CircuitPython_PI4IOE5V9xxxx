@@ -17,7 +17,7 @@ import digitalio
 
 try:
     from typing import Optional
-    from adafruit_pi4ioe5v9xxx.pi4ioe5v9xxx import PI4IOE5V9xxx
+    from .pi4ioe5v9xxx import PI4IOE5V9xxx
     from digitalio import Pull, Direction
 except ImportError:
     pass
@@ -52,7 +52,7 @@ class DigitalInOut:
         """Specify the pin number of the PI4IOE5V9xxx (0...7 for PI4IOE5V9x08, or 0...15
         for PI4IOE5V6416) and PI4IOE5V9xxx instance.
         """
-        self._pin = pin_number
+        self._pin = int(pin_number)
         self._exp = pi4ioe5v9xxx
 
     # kwargs in switch functions below are _necessary_ for compatibility
