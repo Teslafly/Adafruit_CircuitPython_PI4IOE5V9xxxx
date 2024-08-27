@@ -100,6 +100,9 @@ class DigitalInOut:
     def value(self, val: bool) -> None:
         # only set the output as gpio_in is read only.
 
+        # raise exception if trying to set input pin
+        assert self.direction != digitalio.Direction.INPUT, "Can not set value of input pin"
+
         if val:
             self._exp.gpio_out = _enable_bit(self._exp.gpio_out, self._pin)
         else:
@@ -133,8 +136,7 @@ class DigitalInOut:
             if _get_bit(self._exp.pull_en, self._pin):
                 if _get_bit(self._exp.pull_sel, self._pin):
                     return digitalio.Pull.UP
-                else:
-                    return digitalio.Pull.DOWN
+                return digitalio.Pull.DOWN
             else:
                 return None
 
